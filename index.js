@@ -4,7 +4,7 @@ const conectarBD = require("./db");
 const iniciaPreguntas = require("./cli");
 const iniciaServidor = require("./servidor");
 
-conectarBD(() => {
-  iniciaPreguntas();
-  iniciaServidor();
-});
+conectarBD(
+  () => iniciaPreguntas(),
+  () => iniciaServidor()
+);

@@ -1,8 +1,6 @@
 const express = require("express");
 
-const {
-  listarPuntosVacunacion,
-} = require("../../db/controladores/puntosVacunacion");
+const { listarCentros } = require("../../db/controladores/centros");
 const { getNombreCiudad } = require("../../db/controladores/ciudades");
 
 const router = express.Router();
@@ -10,7 +8,7 @@ const router = express.Router();
 router.get("/ciudad/:idCiudad", async (req, res, next) => {
   const { idCiudad } = req.params;
   const nombreCiudad = await getNombreCiudad(idCiudad);
-  const puntosVacunacion = await listarPuntosVacunacion(nombreCiudad, true);
+  const puntosVacunacion = await listarCentros(nombreCiudad, true);
   if (!nombreCiudad) {
     const nuevoError = new Error("No existe esta ciudad");
     nuevoError.codigo = 404;
