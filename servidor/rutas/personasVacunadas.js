@@ -1,4 +1,5 @@
 const express = require("express");
+const { crearPersonaVacunada } = require("../../db/controladores/personas");
 const CentroVacunacion = require("../../db/modelos/CentroVacunacion");
 const Ciudad = require("../../db/modelos/Ciudad");
 const Persona = require("../../db/modelos/Persona");
@@ -62,6 +63,11 @@ router.get("/persona/:dni", async (req, res, next) => {
     return next(nuevoError);
   }
   res.json(persona);
+});
+
+router.post("/persona", async (req, res, next) => {
+  const nuevaPersonaVacunada = await crearPersonaVacunada;
+  res.json(nuevaPersonaVacunada);
 });
 
 module.exports = router;
