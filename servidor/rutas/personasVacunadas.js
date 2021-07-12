@@ -66,19 +66,57 @@ router.get("/persona/:dni", async (req, res, next) => {
 });
 
 router.post("/persona", async (req, res, next) => {
-  const nuevaPersonaVacunada = await crearPersonaVacunada;
+  const persona = req.body;
+  const {
+    dosis: [primeraDosis, segundaDosis],
+  } = persona;
+  if (primeraDosis) {
+    persona.primeraDosis = primeraDosis;
+  }
+  if (segundaDosis) {
+    persona.segundaDosis = segundaDosis;
+  }
+  const nuevaPersonaVacunada = await crearPersonaVacunada(
+    persona.dni,
+    persona.centroVacunacion,
+    persona.vacuna,
+    persona.primeraDosis,
+    persona.segundaDosis
+  );
+  if (!nuevaPersonaVacunada) {
+    const nuevoError = new Error("La persona no se ha enviado correctamente");
+    nuevoError.codigo = 404;
+    return next(nuevoError);
+  }
   res.json(nuevaPersonaVacunada);
 });
 
 router.delete("/persona/:idPersona", async (req, res, next) => {
   const { idPersona } = req.params;
-  const personaVacunadaEliminada = await Persona.findById(idPersona);
+  const existePersona = await Persona.findOne({
+    _id: idPersona,
+  });
+  if (!existePersona) {
+    const nuevoError = new Error("No tenemos esta persona");
+    nuevoError.codigo = 404;
+    return next(nuevoError);
+  }
+  const personaVacunadaEliminada = await Persona.findByIdAndDelete(idPersona);
   res.json(personaVacunadaEliminada);
 });
 
 router.put("/persona/:idPersona", async (req, res, next) => {
   const { idPersona } = req.params;
-  const personaAModificar = await Persona.findById(idPersona);
+  const persona = req.body;
+  const existePersona = await Persona.findOne({
+    _id: idPersona,
+  });
+  if (!existePersona) {
+    const nuevoError = new Error("No tenemos esta persona");
+    nuevoError.codigo = 404;
+    return next(nuevoError);
+  }
+  const personaAModificar = await Persona.findByIdAndUpdate(idPersona, persona);
   res.json(personaAModificar);
 });
 
