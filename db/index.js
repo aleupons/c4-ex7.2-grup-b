@@ -3,7 +3,7 @@ const debug = require("debug")("vacunasApp:db:conexion");
 const chalk = require("chalk");
 const mongoose = require("mongoose");
 
-const conectarBD = (hazAlgo) => {
+const conectarBD = (consola, servidor) => {
   mongoose.connect(
     process.env.MONGODB_URL,
     {
@@ -19,7 +19,8 @@ const conectarBD = (hazAlgo) => {
         return;
       }
       debug(chalk.yellow("Conectado a la base de datos"));
-      hazAlgo();
+      consola();
+      servidor();
     }
   );
 };

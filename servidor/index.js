@@ -4,10 +4,14 @@ const app = require("./init");
 const { error404, errorGeneral } = require("./errores");
 const rutaParaVacunacion = require("./rutas/puntosVacunacion");
 
-app.use(morgan("dev"));
-app.use(express.json());
+const iniciaServidor = () => {
+  app.use(morgan("dev"));
+  app.use(express.json());
 
-app.use("/vacunacion/centros", rutaParaVacunacion);
+  app.use("/vacunacion/centros", rutaParaVacunacion);
 
-app.use(error404);
-app.use(errorGeneral);
+  app.use(error404);
+  app.use(errorGeneral);
+};
+
+module.exports = iniciaServidor;
