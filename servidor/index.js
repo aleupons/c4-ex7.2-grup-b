@@ -12,7 +12,7 @@ const iniciaServidor = () => {
 
   app.use("/vacunacion/centros", rutaCentros);
   app.use("/vacunacion/vacunados", rutaVacunados);
-  app.use("/vacunacion/vacunas", rutaVacunas);
+  /* app.use("/vacunacion/vacunas", rutaVacunas); */
 
   app.use(error404);
   app.use(errorGeneral);
