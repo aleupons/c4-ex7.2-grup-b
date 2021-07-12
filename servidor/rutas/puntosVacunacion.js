@@ -28,10 +28,6 @@ router.get("/centro/:idCentro", async (req, res, next) => {
   const { idCentro } = req.params;
   const centro = await CentroVacunacion.findById(idCentro);
   if (!centro) {
-    const nuevoError = new Error("No existe este centro");
-    nuevoError.codigo = 404;
-    return next(nuevoError);
-  } else if (centro.length === 0) {
     const nuevoError = new Error(
       `No existen centros de vacunación con la id: ${idCentro}`
     );
