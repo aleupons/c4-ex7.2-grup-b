@@ -70,4 +70,16 @@ router.post("/persona", async (req, res, next) => {
   res.json(nuevaPersonaVacunada);
 });
 
+router.delete("/persona/:idPersona", async (req, res, next) => {
+  const { idPersona } = req.params;
+  const personaVacunadaEliminada = await Persona.findById(idPersona);
+  res.json(personaVacunadaEliminada);
+});
+
+router.put("/persona/:idPersona", async (req, res, next) => {
+  const { idPersona } = req.params;
+  const personaAModificar = await Persona.findById(idPersona);
+  res.json(personaAModificar);
+});
+
 module.exports = router;
