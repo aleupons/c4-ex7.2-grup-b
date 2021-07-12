@@ -51,4 +51,17 @@ router.get("/centro/:idCentro", async (req, res, next) => {
   res.json(personas);
 });
 
+router.get("/persona/:dni", async (req, res, next) => {
+  const { dni } = req.params;
+  const persona = await Persona.findOne({
+    dni,
+  });
+  if (!persona) {
+    const nuevoError = new Error("No tenemos esta persona vacunada");
+    nuevoError.codigo = 404;
+    return next(nuevoError);
+  }
+  res.json(persona);
+});
+
 module.exports = router;
